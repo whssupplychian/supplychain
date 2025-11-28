@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supply Chain Index</title>
+    <style>
+        /* CRITICAL FIX: Ensure padding and borders don't break width calculation */
+        * {
+            box-sizing: border-box; 
+        }
+
+        /* --- 1. SET UP FULL PAGE LAYOUT --- */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Force full height */
+            width: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden; /* Prevent side scrolling */
+        }
+
+        /* --- 2. FIXED BACKGROUND IMAGE LAYER --- */
+        .background-layer {
+            position: fixed; /* Stays in place even when scrolling */
+            top: 0;
+            left: 0;
+            width: 100vw; /* 100% of viewport width */
+            height: 100vh; /* 100% of viewport height */
+            z-index: -2; /* Put it way in the back */
+            
+            /* THIS IS THE CRITICAL CHANGE: USING THE LOCAL FILE NAME */
+            background-image: url('https://20db.sharepoint.com/:i:/s/20dBHearingSdnBhd/IQALaKAMxaldT49RMAoKgBD6Ae5ieMeHeuJs0q3lISBtJLg?e=Hmzg06'); 
+            background-size: cover; /* Stretch to fill screen */
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* --- 3. TRANSPARENT WHITE OVERLAY --- */
+        .overlay-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind content, in front of image */
+            /* Adjusted opacity to 0.4 so you can see the photo better */
+            background-color: rgba(255, 255, 255, 0.4); 
+        }
+
+        /* --- 4. MAIN CONTENT WRAPPER --- */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px; /* Space from top */
+        }
+
+        .wrapper {
+            width: 95%; /* Use 95% of the screen width */
+            background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white box */
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        /* --- Search Box Styling (Google Style) --- */
+        .search-container {
+            padding: 25px 35px 5px; 
+            text-align: center;
+        }
+
+        .google-search-input {
+            width: 90%;
+            max-width: 600px;
+            padding: 12px 20px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            font-size: 1.1em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s;
+            background-color: white;
+            margin-bottom: 20px;
+        }
+        .google-search-input:focus {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            outline: none;
+        }
+
+        /* --- Header Panel --- */
+        .header-panel {
+            background-color: #F5E82C;
+            min-height: 150px;
+            padding: 15px;
+            border-radius: 18px 18px 0 0;
+            color: #333;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .header-panel h2 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+        }
+        .header-panel img {
+            /* Changed to the 20dB logo in your images, assuming this is correct */
+            width: 150px; 
+            height: auto;
+            margin-top: 5px;
+        }
+
+        /* --- Button Grid Container --- */
+        .button-grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; 
+            padding: 25px;
+            padding-top: 15px; 
+            justify-content: space-between;
+        }
+
+        .index-button {
+            /* Ensures exactly 3 buttons per row */
+            width: calc((100% - 16px) / 3); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: white !important;
+            
+            min-height: 120px;
+            padding: 15px;
+            font-size: 25px;
+            font-weight: 600;
+            text-align: center;
+
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3), inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .index-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 -4px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Color Palette */
+        .color-cyan { background-color: #00ADB5; }
+        .color-pink { background-color: #FF6B8B; }
+        .color-purple-mid { background-color: #8C52FF; }
+        .color-orange { background-color: #FF9F43; }
+        .color-purple-dark { background-color: #5D3FD3; }
+        .color-yellow { background-color: #FFD700; }
+    </style>
+</head>
+<body>
+
+<div class="background-layer"></div>
+
+<div class="overlay-layer"></div>
+
+<div class="wrapper">
+    
+    <div class="header-panel">
+        <h2>Supply Chain Index</h2>
+        <img src="https://www.20dbhearing.com/my/public/themes/20dB/images/logo-20dB-Hearing.webp" alt="20dB Hearing Logo">
+    </div>
+
+    <div class="search-container">
+        <input 
+            list="ready-words" 
+            id="search-input" 
+            name="search-term"
+            placeholder="Search instantly..."
+            class="google-search-input"
+            onchange="redirectToLink(this.value)"
+        >
+        <datalist id="ready-words">
+            <option value="1. WHS Procedure">
+            <option value="2. Product Refer">
+            <option value="3. Product Update">
+            <option value="4. Phase Out/Obsolete">
+            <option value="5. Training/Briefing">
+            <option value="6. File Sharing">
+        </datalist>
+    </div>
+    
+    <div class="button-grid-container">
+        <a id="link-whs" 
+           href="https://20db.sharepoint.com/:f:/s/20dBHearingSdnBhd/IgC71awvzZ7VQrFUzUN2YZkqAQiNq7_izso-kpC4ZAMuq3U?e=Ly9ocf" 
+           target="_blank" 
+           data-interception="off" 
+           class="index-button color-cyan">
+            📝 1. WHS Procedure
+        </a>
+        
+        <a id="link-refer" 
+           href="https://20db.sharepoint.com/sites/20dBHearingSdnBhd/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F20dBHearingSdnBhd%2FShared%20Documents%2FWholesales%20Support%2F2%2E%20Product%20Refer&viewid=68bb6ad7%2Daf12%2D4011%2Dbcca%2Dd45f742b4efe&p=true&ga=1" 
+           target="_blank" 
+           data-interception="off" 
+           class="index-button color-pink">
+            🔎 2. Product Refer
+        </a>
+        
+        <a id="link-update" 
+           href="https://20db.sharepoint.com/sites/20dBHearingSdnBhd/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F20dBHearingSdnBhd%2FShared%20Documents%2FWholesales%20Support%2F3%2E%20Product%20Update&viewid=68bb6ad7%2Daf12%2D4011%2Dbcca%2Dd45f742b4efe&p=true&ga=1" 
+           target="_blank" 
+           data-interception="off" 
+           class="index-button color-purple-mid">
+            🔄 3. Product Update
+        </a>
+        
+        <a id="link-obsolete" 
+           href="https://drive.google.com/drive/folders/180RRnKFdAOoKrCDrbxuUZCHRuZ-dQDTp?usp=sharing" 
+           target="_blank" 
+           data-interception="off" 
+           class="index-button color-orange">
+            🗑️ 4. Phase Out/Obsolete
+        </a>
+        
+        <a id="link-training" 
+           href="https://20db.sharepoint.com/sites/20dBHearingSdnBhd/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F20dBHearingSdnBhd%2FShared%20Documents%2FWholesales%20Support%2F5%2E%20Training%2C%20Briefing&viewid=68bb6ad7%2Daf12%2D4011%2Dbcca%2Dd45f742b4efe&p=true&ga=1" 
+           target="_blank" 
+           data-interception="off" 
+           class="index-button color-purple-dark">
+            📚 5. Training/Briefing
+        </a>
+        
+        <a id="link-sharing" 
+           href="https://20db.sharepoint.com/sites/20dBHearingSdnBhd/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F20dBHearingSdnBhd%2FShared%20Documents%2FWholesales%20Support%2F6%2E%20Google%20Sharing&viewid=68bb6ad7%2Daf12%2D4011%2Dbcca%2Dd45f742b4efe&p=true&ga=1" 
+           target="_blank" 
+           data-interception="off" 
+           class="index-button color-yellow">
+            🌐 6. File Sharing
+        </a>
+    </div>
+</div>
+
+<script>
+    function redirectToLink(selectedValue) {
+        // Updated Link Map
+        const linkMap = {
+            "1. WHS Procedure": document.getElementById('link-whs').href,
+            "2. Product Refer": document.getElementById('link-refer').href,
+            "3. Product Update": document.getElementById('link-update').href,
+            "4. Phase Out/Obsolete": document.getElementById('link-obsolete').href,
+            "5. Training/Briefing": document.getElementById('link-training').href,
+            "6. File Sharing": document.getElementById('link-sharing').href,
+        };
+
+        const targetUrl = linkMap[selectedValue];
+
+        if (targetUrl) {
+            // "noopener" helps ensure a clean new window in some browser contexts
+            window.open(targetUrl, '_blank', 'noopener'); 
+        }
+    }
+</script>
+
+</body>
+</html>
